@@ -3,9 +3,11 @@
 // TODO: Include packages needed for this application
 const fs = require('fs');
 const inquirer = require('inquirer')
+const generateMarkdown = require('./utils/generateMarkdown.js');
 
 // TODO: Create an array of questions for user input
 const questions = [
+    // Project title question with error control
     {
         type: 'input',
         name: 'title',
@@ -19,6 +21,7 @@ const questions = [
             }
         }
     },
+    // Project description question with error control
     {
         type: 'input',
         name: 'description',
@@ -32,6 +35,7 @@ const questions = [
             }
         }
     },
+    // Checklist for additional options to add to readme
     {
         type: 'checkbox',
         name: 'contents',
@@ -61,8 +65,13 @@ const questions = [
                 name: 'Credits',
                 checked: true
             },
+            {
+                name: 'Screenshots',
+                checked: true
+            }
         ]
     },
+    // Installation question with error control
     {
         type: 'input',
         name: 'installation',
@@ -83,6 +92,7 @@ const questions = [
             }
         }
     },
+    // Instructions question with error control
     {
         type: 'input',
         name: 'usage',
@@ -96,6 +106,7 @@ const questions = [
             }
         }
     },
+    // License question with error control
     {
         type: 'list',
         name: 'license',
@@ -118,6 +129,7 @@ const questions = [
             }
         }
     },
+    // Contributing question with error control
     {
         type: 'input',
         name: 'contributing',
@@ -138,6 +150,7 @@ const questions = [
             }
         }
     },
+    // Tests question with error control
     {
         type: 'input',
         name: 'tests',
@@ -158,26 +171,7 @@ const questions = [
             }
         }
     }, 
-    {
-        type: 'input',
-        name: 'questions',
-        message: 'Please provide an email address for others to reach you with questions.',
-        when: ({ contents }) => {
-            if (contents.indexOf('Questions') > -1) {
-                return true;
-            } else { 
-                return false;
-            }
-        },
-        validate: questionsInput => {
-            if (questionsInput) {
-                return true;
-            } else {
-                console.log('Please provide an email address!');
-                return false;
-            }
-        }
-    },
+    // Github username question with error control
     {
         type: 'input',
         name: 'github',
@@ -191,9 +185,10 @@ const questions = [
             }
         }
     },
+    // Github profile question with error control
     {
         type: 'input',
-        name: 'repo',
+        name: 'profile',
         message: 'Please enter your GitHub profile name. (Required)',
         validate: repoInput => {
             if (repoInput) {
@@ -203,25 +198,48 @@ const questions = [
             }
         }
     },
+    // Email question with error control
     {
         type: 'input',
-        name: 'email',
-        message: 'Please enter your email address. (Required)',
-        validate: emailInput => {
-            if (emailInput) {
+        name: 'questions',
+        message: 'Please provide an email address for others to reach you with questions.',
+        when: ({ contents }) => {
+            if (contents.indexOf('Questions') > -1) {
+                 return true;
+            } else { 
+                return false;
+            }
+        },
+        validate: questionsInput => {
+            if (questionsInput) {
                 return true;
             } else {
-                console.log('Please enter your email address!')
+                console.log('Please provide an email address!');
+                return false;
             }
         }
-    } 
+    },
 ];
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+function writeToFile(fileName, data) {
+    fs.writeFile(`./dist/${fileName}`, data, err => {
+        if (err) {
+            throw err
+        };
+        console.log('README created!')
+    });
+};
 
 // TODO: Create a function to initialize app
-function init() {}
+function init() {
+    return inquirer.prompt(questions);
+};
 
 // Function call to initialize app
-init();
+init()
+    .then(answers => generateMarkdown(answers))
+    .then(generatedReadme => writeToFile('README.md', generatedReadme))
+    .catch(err => {
+        console.log(err);
+    });
