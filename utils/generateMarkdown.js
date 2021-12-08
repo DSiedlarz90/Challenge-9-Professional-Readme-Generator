@@ -13,27 +13,27 @@ function renderLicenseBadge(license) {
 // TODO: Create a function that returns the license section of README
 // If there is no license, return an empty string
 function renderLicenseSection(license) {
-  let licenseSection = `License`;
+  let licenseSection = '';
   if (license == 'MIT') {
-    licenseSection += `
+    licenseSection += `## License
   This application is licensed under the ${license} license.
   
   [https://opensource.org/licenses/MIT](https://opensource.org/licenses/MIT)`;
   };
   if (license == 'GNU') {
-    licenseSection += `
+    licenseSection += `## License
   This application is licensed under the ${license} license.
   
   [https://www.gnu.org/licenses/licenses.en.html](https://www.gnu.org/licenses/licenses.en.html)`;
   };
   if (license == 'Apache 2.0') {
-    licenseSection += `
+    licenseSection += `## License
   This application is licensed under the ${license} license.
   
   [https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0)`;
   };
   if(license == 'ISC') {
-    licenseSection += `
+    licenseSection += `## License
   This application is licensed under the ${license} license.  
   
   [https://opensource.org/licenses/ISC](https://opensource.org/licenses/ISC)`
@@ -109,13 +109,13 @@ function renderEmail(questions) {
     return `## Contact
   If you have any questions or concerns please reach out at:
 
-  [${questions}](${questions})`;
+  [${questions}](mailto:${questions})`;
   } else {
     return '';
   }
 };
 
-//renderScreenshot
+//renderScreenshot section
 function renderScreenshot(screenshotLink, screenshotAlt) {
   if (screenshotLink, screenshotAlt) {
     return `## Screenshot
@@ -125,7 +125,7 @@ function renderScreenshot(screenshotLink, screenshotAlt) {
   }
 };
 
-//renderDeployed
+//renderDeployed section
 function renderDeployed(link) {
   if (link) {
     return `## Deployed Application
@@ -135,7 +135,7 @@ function renderDeployed(link) {
   }
 };
 
-//renderBuiltWith
+//renderBuiltWith section
 function renderBuiltWith(built) {
   if (built) {
     return `## Application Built With
@@ -147,9 +147,10 @@ function renderBuiltWith(built) {
   
 
 
-//renderTableOfContents
-function renderTableOfContents(questions, github, profile, tests, description, installation, usage, contributing, license, built, screenshotLink, screenshotAlt, link) {
-  let tableOfContents = `## Table of Contents`;
+//renderTableOfContents section
+function renderTableOfContents(title, questions, github, profile, tests, description, installation, usage, contributing, license, built, screenshotLink, screenshotAlt, link) {
+  let tableOfContents = `## Table of Contents
+  * [Return to Top](#)`;
   if (description) {
     tableOfContents += `
   * [Application Description](#application-description)`
