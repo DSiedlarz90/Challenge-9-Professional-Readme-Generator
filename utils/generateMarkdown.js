@@ -148,52 +148,74 @@ function renderBuiltWith(built) {
 
 
 //renderTableOfContents section
-function renderTableOfContents(title, questions, github, profile, tests, description, installation, usage, contributing, license, built, screenshotLink, screenshotAlt, link) {
+function renderTableOfContents(questions, github, profile, tests, description, installation, usage, contributing, license, built, screenshotLink, screenshotAlt, link) {
   let tableOfContents = `## Table of Contents
   * [Return to Top](#)`;
   if (description) {
     tableOfContents += `
   * [Application Description](#application-description)`
+  } else {
+    tableOfContents += ''
   };
   if (installation) {
     tableOfContents += `
   * [Application Installation](#application-installation)`
+  } else {
+    tableOfContents += ''
   };
   if (usage) {
     tableOfContents += `
   * [How to Use](#how-to-use)`
+  } else {
+    tableOfContents += ''
   };
   if (tests) {
     tableOfContents += `
   * [Tests](#tests)`
+  } else {
+    tableOfContents += ''
   };
   if (built) {
     tableOfContents += `
   * [Application Built With](#application-built-with)`
+  } else {
+    tableOfContents += ''
   };
   if (screenshotLink, screenshotAlt) {
     tableOfContents += `
   * [Screenshot](#screenshot)`
+  } else {
+    tableOfContents += ''
   };
   if (link) {
     tableOfContents += `
   * [Deployed Application](#deployed-application)`
-  }
+  } else {
+    tableOfContents += ''
+  };
   if (contributing) {
     tableOfContents += `
   * [Interested in Contributing?](#interested-in-contributing)`
+  } else {
+    tableOfContents += ''
   };
   if (github, profile) {
     tableOfContents += `
   * [Github Info](#github-info)`
+  } else {
+    tableOfContents += ''
   };
   if (questions) {
     tableOfContents += `
   * [Contact](#contact)`
+  } else {
+    tableOfContents += ''
   };
   if (license) {
     tableOfContents += `
   * [License](#license)`
+  } else {
+    tableOfContents += ''
   };
   return tableOfContents;
 };
