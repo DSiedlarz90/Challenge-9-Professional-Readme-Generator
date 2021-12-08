@@ -10,18 +10,35 @@ function renderLicenseBadge(license) {
 
 // TODO: Create a function that returns the license link
 // If there is no license, return an empty string
-function renderLicenseLink(license) {
-};
-
 // TODO: Create a function that returns the license section of README
 // If there is no license, return an empty string
 function renderLicenseSection(license) {
-  if (license) {
-    return `## License
-  This application is licensed under the ${license} license.`;
-  } else {
-    return '';
-  }
+  let licenseSection = `License`;
+  if (license == 'MIT') {
+    licenseSection += `
+  This application is licensed under the ${license} license.
+  
+  [https://opensource.org/licenses/MIT](https://opensource.org/licenses/MIT)`;
+  };
+  if (license == 'GNU') {
+    licenseSection += `
+  This application is licensed under the ${license} license.
+  
+  [https://www.gnu.org/licenses/licenses.en.html](https://www.gnu.org/licenses/licenses.en.html)`;
+  };
+  if (license == 'Apache 2.0') {
+    licenseSection += `
+  This application is licensed under the ${license} license.
+  
+  [https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0)`;
+  };
+  if(license == 'ISC') {
+    licenseSection += `
+  This application is licensed under the ${license} license.  
+  
+  [https://opensource.org/licenses/ISC](https://opensource.org/licenses/ISC)`
+  };
+  return licenseSection;
 };
 
 // renderDescription section
@@ -91,7 +108,7 @@ function renderEmail(questions) {
   if (questions) {
     return `## Contact
   If you have any questions or concerns please reach out at:
-  
+
   [${questions}](${questions})`;
   } else {
     return '';

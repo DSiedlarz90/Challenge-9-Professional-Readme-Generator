@@ -274,26 +274,7 @@ const questions = [
             }
         }
     },
-    {
-        type: 'input',
-        name: 'link',
-        message: 'Please provide a link to your deployed application. (Required)',
-        when: ({ contents }) => {
-            if (contents.indexOf('Deployed Application') > -1) {
-                return true;
-            } else { 
-                return false;
-            }
-        },
-        validate: linkInput => {
-            if (linkInput) {
-                return true;
-            } else {
-                console.log('Please enter a link!');
-                return false;
-            }
-        }
-    },
+    // Coding used question with error control
     {
         type: 'checkbox',
         name: 'built',
@@ -316,6 +297,7 @@ const questions = [
             }
         }
     },
+    // Screenshot link question with error control
     {
         type: 'input',
         name: 'screenshotLink',
@@ -336,6 +318,7 @@ const questions = [
             }
         }
     },
+    // Screenshot alt description question with error control
     {
         type: 'input',
         name: 'screenshotAlt',
@@ -355,6 +338,7 @@ const questions = [
             }
         }
     },
+    // Deployed application question with error control
     {
         type: 'input',
         name: 'link',
