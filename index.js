@@ -7,11 +7,74 @@ const generateMarkdown = require('./utils/generateMarkdown.js');
 
 // TODO: Create an array of questions for user input
 const questions = [
+        // Checklist for options to add to readme
+    {
+        type: 'checkbox',
+        name: 'contents',
+        message: 'Please check all sections you would like to include in your README.',
+        choices: [
+            {
+                name: 'Title',
+                checked: false
+            },
+            {
+                name: 'Description',
+                checked: false
+            },
+            {
+                name: 'Application Installation',
+                checked: false
+            },
+            {
+                name: 'How to Use',
+                checked: false
+            },
+            {
+                name: 'License',
+                checked: false
+            },
+            {
+                name: 'Interested in Contributing?',
+                checked: false
+            },
+            {
+                name: 'Tests',
+                checked: false
+            },
+            {
+                name: 'Github',
+                checked: false
+            },
+            {
+                name: 'Email Address',
+                checked: false
+            },
+            {
+                name: 'Screenshots',
+                checked: false
+            },
+            {
+                name: 'Built',
+                checked: false
+            },
+            {
+                name: 'Deployed',
+                checked: false
+            }
+        ]
+    },
     // Project title question with error control
     {
         type: 'input',
         name: 'title',
         message: 'Please provide a project title.  (Required)',
+        when: ({ contents }) => {
+            if (contents.indexOf('Title') > -1) {
+                return true;
+            } else { 
+                return false;
+            }
+        },
         validate: nameInput => {
             if (nameInput) {
                 return true;
@@ -26,6 +89,13 @@ const questions = [
         type: 'input',
         name: 'description',
         message: 'Please provide a description of your application. (Required)',
+        when: ({ contents }) => {
+            if (contents.indexOf('Description') > -1) {
+                return true;
+            } else { 
+                return false;
+            }
+        },
         validate: descInput => {
             if (descInput) {
                 return true;
@@ -35,51 +105,15 @@ const questions = [
             }
         }
     },
-    // Checklist for additional options to add to readme
-    {
-        type: 'checkbox',
-        name: 'contents',
-        message: 'Please check additional sections you would like to include in your README.',
-        choices: [
-            {
-                name: 'Coding used',
-                checked: true
-            },
-            {
-                name: 'License',
-                checked: true
-            },
-            {
-                name: 'Contributing',
-                checked: true
-            },
-            {
-                name: 'Tests',
-                checked: true
-            },
-            {
-                name: 'Questions',
-                checked: true
-            },
-            {
-                name: 'Credits',
-                checked: true
-            },
-            {
-                name: 'Screenshots',
-                checked: true
-            }
-        ]
-    },
     // Installation question with error control
     {
         type: 'input',
         name: 'installation',
-        message: 'Please list any required packages for installation of your application.',
+        message: 'Please list any required packages for installation of your application. (Required)',
         when: ({ contents }) => {
-            if (contents.indexOf('Installation') > -1) {
+            if (contents.indexOf('Application Installation') > -1) {
                 return true;
-            } else {
+            } else { 
                 return false;
             }
         },
@@ -97,6 +131,13 @@ const questions = [
         type: 'input',
         name: 'usage',
         message: 'Please provide instructions to use your application. (Required)',
+        when: ({ contents }) => {
+            if (contents.indexOf('How to Use') > -1) {
+                return true;
+            } else { 
+                return false;
+            }
+        },
         validate: usageInput => {
             if (usageInput) {
                 return true;
@@ -110,13 +151,13 @@ const questions = [
     {
         type: 'list',
         name: 'license',
-        message: 'Please provide license information.',
+        message: 'Please provide license information. (Required)',
         choices: ['MIT', 'GNU', 'Apache 2.0', 'ISC'],
         default: 0,
         when: ({ contents }) => {
             if (contents.indexOf('License') > -1) {
                 return true;
-            } else {
+            } else { 
                 return false;
             }
         },
@@ -133,11 +174,11 @@ const questions = [
     {
         type: 'input',
         name: 'contributing',
-        message: 'Please enter your guidelines for contributing.',
+        message: 'Please enter your guidelines for contributing. (Required)',
         when: ({ contents }) => {
-            if (contents.indexOf('Contributing') > -1) {
+            if (contents.indexOf('Interested in Contributing?') > -1) {
                 return true;
-            } else {
+            } else { 
                 return false;
             }
         },
@@ -154,11 +195,11 @@ const questions = [
     {
         type: 'input',
         name: 'tests',
-        message: 'Please enter test information for your application.',
+        message: 'Please enter test information for your application. (Required)',
         when: ({ contents }) => {
             if (contents.indexOf('Tests') > -1) {
                 return true;
-            } else {
+            } else { 
                 return false;
             }
         },
@@ -176,6 +217,13 @@ const questions = [
         type: 'input',
         name: 'github',
         message: 'Please enter your GitHub username. (Required)',
+        when: ({ contents }) => {
+            if (contents.indexOf('Github') > -1) {
+                return true;
+            } else { 
+                return false;
+            }
+        },
         validate: githubInput => {
             if (githubInput) {
                 return true;
@@ -189,9 +237,16 @@ const questions = [
     {
         type: 'input',
         name: 'profile',
-        message: 'Please enter your GitHub profile name. (Required)',
-        validate: repoInput => {
-            if (repoInput) {
+        message: 'Please enter The link to your Github profile. (Required)',
+        when: ({ contents }) => {
+            if (contents.indexOf('Github') > -1) {
+                return true;
+            } else { 
+                return false;
+            }
+        },
+        validate: profileInput => {
+            if (profileInput) {
                 return true;
             } else {
                 console.log('Please enter your Github profile name!')
@@ -202,10 +257,10 @@ const questions = [
     {
         type: 'input',
         name: 'questions',
-        message: 'Please provide an email address for others to reach you with questions.',
+        message: 'Please provide an email address for others to reach you with questions. (Required)',
         when: ({ contents }) => {
-            if (contents.indexOf('Questions') > -1) {
-                 return true;
+            if (contents.indexOf('Email Address') > -1) {
+                return true;
             } else { 
                 return false;
             }
@@ -219,6 +274,107 @@ const questions = [
             }
         }
     },
+    {
+        type: 'input',
+        name: 'link',
+        message: 'Please provide a link to your deployed application. (Required)',
+        when: ({ contents }) => {
+            if (contents.indexOf('Deployed Application') > -1) {
+                return true;
+            } else { 
+                return false;
+            }
+        },
+        validate: linkInput => {
+            if (linkInput) {
+                return true;
+            } else {
+                console.log('Please enter a link!');
+                return false;
+            }
+        }
+    },
+    {
+        type: 'checkbox',
+        name: 'built',
+        message: 'Please select the technologies that your application was built with. (Required)',
+        choices: [' HTML', ' CSS', ' SASS', ' JavaScript', ' Node.js', ' Express.js'],
+        default: 0,
+        when: ({ contents }) => {
+            if (contents.indexOf('Built') > -1) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+        validate: builtInput => {
+            if (builtInput) {
+                return true;
+            } else {
+                console.log('Please provide a link for your screenshot!')
+                return false;
+            }
+        }
+    },
+    {
+        type: 'input',
+        name: 'screenshotLink',
+        message: 'Please provide a link for your screenshot. (Required)',
+        when: ({ contents }) => {
+            if (contents.indexOf('Screenshots') > -1) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+        validate: screenshotLinkInput => {
+            if (screenshotLinkInput) {
+                return true;
+            } else {
+                console.log('Please provide a link for your screenshot!')
+                return false;
+            }
+        }
+    },
+    {
+        type: 'input',
+        name: 'screenshotAlt',
+        message: 'Please provide alt text for your screenshot. (Required)',
+        when: ({ contents }) => {
+            if (contents.indexOf('Screenshots') > -1) {
+                return true;
+            } else {
+                return false;
+            }
+        },    
+        validate: screenshotAltInput => {
+            if (screenshotAltInput) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    },
+    {
+        type: 'input',
+        name: 'link',
+        message: 'Please provide a link to your deployed application.',
+        when: ({ contents }) => {
+            if (contents.indexOf('Deployed') > -1) {
+                return true;
+            } else { 
+                return false;
+            }
+        },
+        validate: linkInput => {
+            if (linkInput) {
+                return true;
+            } else {
+                console.log('Please enter a link!');
+                return false;
+            }
+        }
+    },
 ];
 
 // TODO: Create a function to write README file
@@ -227,18 +383,18 @@ function writeToFile(fileName, data) {
         if (err) {
             throw err
         };
-        console.log('README created!')
+        console.log('README Complete!')
     });
 };
 
 // TODO: Create a function to initialize app
-function init() {
-    return inquirer.prompt(questions);
+function init(questions) {
+    return inquirer.prompt(questions);   
 };
 
 // Function call to initialize app
-init()
-    .then(answers => generateMarkdown(answers))
+init(questions)
+    .then(data => generateMarkdown(data))
     .then(generatedReadme => writeToFile('README.md', generatedReadme))
     .catch(err => {
         console.log(err);
